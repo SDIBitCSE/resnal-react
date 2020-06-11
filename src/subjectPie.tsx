@@ -1,5 +1,5 @@
 import React from "react";
-import { PieChart, Pie, Sector, Cell, Tooltip, Legend } from "recharts";
+import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 
 export interface SubjectPieProps {
   data: any;
@@ -15,6 +15,7 @@ const SubjectPie: React.SFC<SubjectPieProps> = ({ data }) => {
   subjectWize.map((student: any) => {
     if (student.marks[0].fcd === "F") cF++;
     else cP++;
+    return 0;
   });
   var data01 = [
     { name: "Pass", value: cP },

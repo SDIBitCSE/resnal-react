@@ -2,7 +2,6 @@ import React from "react";
 import {
   BarChart,
   Bar,
-  Cell,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -41,6 +40,7 @@ const SubjectBar: React.SFC<SubjectBarProps> = ({ data }) => {
         cF++;
         break;
     }
+    return 0;
   });
   let chartData = [
     { name: "FCD", count: cfcd },

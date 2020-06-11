@@ -1,5 +1,5 @@
 import React from "react";
-import { PieChart, Pie, Sector, Cell, Tooltip, Legend } from "recharts";
+import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 
 export interface TotalFCDPieProps {
   data: any;
@@ -12,6 +12,7 @@ const TotalFCDPie: React.SFC<TotalFCDPieProps> = ({ data }) => {
   data.batchResult.map((student: any) => {
     if (student.totalFCD === "F") cF++;
     else cP++;
+    return 0;
   });
   var data01 = [
     { name: "Pass", value: cP },

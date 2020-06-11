@@ -9,9 +9,6 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import TotalFCDTable from "./totalFCDTable";
-import TotalFCDBar from "./totalFCDBar";
-import TotalFCDPie from "./totalFCDPie";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import SubjectTable from "./subjectTable";
@@ -92,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Subject: React.SFC<SubjectProps> = () => {
-  const { loading: Bloading, error, data: Bdata } = useQuery(GET_BATCHES);
+  const { loading: Bloading, data: Bdata } = useQuery(GET_BATCHES);
   const [batch, setBatch] = useState<string>("");
   const [sem, setSem] = useState<string>("");
   const [section, setSection] = useState<string>("");
@@ -368,11 +365,16 @@ const Subject: React.SFC<SubjectProps> = () => {
                     }
                   />
                   <br />
-                  <Button variant="contained" color="primary" type="submit">
+                  <Button
+                    style={{ marginTop: "20px" }}
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                  >
                     Submit
                   </Button>
                   <Button
-                    style={{ marginLeft: "10px" }}
+                    style={{ marginLeft: "10px", marginTop: "20px" }}
                     variant="contained"
                     color="secondary"
                     onClick={() => window.location.reload()}
@@ -380,7 +382,7 @@ const Subject: React.SFC<SubjectProps> = () => {
                     Reset
                   </Button>
                   <Button
-                    style={{ marginLeft: "10px" }}
+                    style={{ marginLeft: "10px", marginTop: "20px" }}
                     variant="contained"
                     color="primary"
                     onClick={() =>

@@ -74,19 +74,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Batch: React.SFC<BatchProps> = () => {
-  const { loading: Bloading, error, data: Bdata } = useQuery(GET_BATCHES);
+  const { loading: Bloading, data: Bdata } = useQuery(GET_BATCHES);
   const [batch, setBatch] = useState<string>("");
   const [sem, setSem] = useState<string>("");
   const [section, setSection] = useState<string>("");
   const [yearBack, setYearBack] = useState(true);
   const [backLog, setBackLog] = useState(false);
-  let [counts, setCounts] = useState([
-    { name: "FCD", count: 0 },
-    { name: "FC", count: 0 },
-    { name: "SC", count: 0 },
-    { name: "P", count: 0 },
-    { name: "F", count: 0 },
-  ]);
   const classes = useStyles();
   const [errors, setErrors] = useState({
     batch: false,
@@ -288,11 +281,16 @@ const Batch: React.SFC<BatchProps> = () => {
                     }
                   />
                   <br />
-                  <Button variant="contained" color="primary" type="submit">
+                  <Button
+                    style={{ marginTop: "20px" }}
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                  >
                     Submit
                   </Button>
                   <Button
-                    style={{ marginLeft: "10px" }}
+                    style={{ marginLeft: "10px", marginTop: "20px" }}
                     variant="contained"
                     color="secondary"
                     onClick={() => window.location.reload()}
@@ -300,7 +298,7 @@ const Batch: React.SFC<BatchProps> = () => {
                     Reset
                   </Button>
                   <Button
-                    style={{ marginLeft: "10px" }}
+                    style={{ marginLeft: "10px", marginTop: "20px" }}
                     variant="contained"
                     color="primary"
                     onClick={() =>
@@ -318,7 +316,7 @@ const Batch: React.SFC<BatchProps> = () => {
                     Export
                   </Button>
                   <Button
-                    style={{ marginLeft: "10px" }}
+                    style={{ marginLeft: "10px", marginTop: "20px" }}
                     variant="contained"
                     color="secondary"
                     onClick={() =>
