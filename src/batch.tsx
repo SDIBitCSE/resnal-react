@@ -14,6 +14,7 @@ import TotalFCDBar from "./totalFCDBar";
 import TotalFCDPie from "./totalFCDPie";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+import CircularProgress from "@material-ui/core/CircularProgress";
 export interface BatchProps {}
 const GET_BATCH = gql`
   query getBatch(
@@ -298,15 +299,53 @@ const Batch: React.SFC<BatchProps> = () => {
                   >
                     Reset
                   </Button>
+                  <Button
+                    style={{ marginLeft: "10px" }}
+                    variant="contained"
+                    color="primary"
+                    onClick={() =>
+                      section === ""
+                        ? window.open(
+                            `http://localhost:4000/script/batchwize/${batch}/${sem}/${yearBack}/${backLog}`,
+                            "_blank"
+                          )
+                        : window.open(
+                            `http://localhost:4000/script/batchwize/${batch}/${sem}/${yearBack}/${backLog}/${section}`,
+                            "_blank"
+                          )
+                    }
+                  >
+                    Export
+                  </Button>
+                  <Button
+                    style={{ marginLeft: "10px" }}
+                    variant="contained"
+                    color="secondary"
+                    onClick={() =>
+                      section === ""
+                        ? window.open(
+                            `http://localhost:4000/script/exportall/${batch}/${sem}/${yearBack}/${backLog}`,
+                            "_blank"
+                          )
+                        : window.open(
+                            `http://localhost:4000/script/exportall/${batch}/${sem}/${yearBack}/${backLog}/${section}`,
+                            "_blank"
+                          )
+                    }
+                  >
+                    Export All
+                  </Button>
                 </form>
               </CardContent>
             </Card>
+            {called && loading && <CircularProgress />}
             {called && !loading && (
               <TotalFCDTable raw_data={data.batchResult} />
             )}
           </Container>
         </Grid>
         <Grid item xs={12} sm={4}>
+          {called && loading && <CircularProgress />}
           {called && !loading && <TotalFCDBar data={data} />}
           {called && !loading && <TotalFCDPie data={data} />}
         </Grid>

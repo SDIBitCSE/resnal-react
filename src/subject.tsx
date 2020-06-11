@@ -14,27 +14,37 @@ import TotalFCDBar from "./totalFCDBar";
 import TotalFCDPie from "./totalFCDPie";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+import SubjectTable from "./subjectTable";
+import SubjectBar from "./subjectBar";
+import SubjectPie from "./subjectPie";
+import CircularProgress from "@material-ui/core/CircularProgress";
 export interface SubjectProps {}
-const GET_BATCH = gql`
-  query getBatch(
+const GET_SUBJECTS = gql`
+  query getSubjects(
     $batch: String!
     $sem: Int!
     $section: String
     $yearBack: Boolean!
     $backLog: Boolean!
+    $subjectCode: String!
   ) {
-    batchResult(
+    subjectWizeResult(
       batch: $batch
       sem: $sem
       section: $section
       yearBack: $yearBack
       backLog: $backLog
+      subjectCode: $subjectCode
     ) {
       usn
       name
       section
-      gpa
-      totalFCD
+      marks {
+        internalMarks
+        externalMarks
+        totalMarks
+        fcd
+      }
     }
   }
 `;
@@ -95,13 +105,14 @@ const Subject: React.SFC<SubjectProps> = () => {
     sem: false,
     sub: false,
   });
-  const [loadBatch, { called, loading, data }] = useLazyQuery(GET_BATCH, {
+  const [loadRes, { called, loading, data }] = useLazyQuery(GET_SUBJECTS, {
     variables: {
       batch,
       sem: Number.parseInt(sem),
       section: section === "" ? null : section,
       yearBack,
       backLog,
+      subjectCode: subject,
     },
   });
   const [
@@ -138,7 +149,7 @@ const Subject: React.SFC<SubjectProps> = () => {
                     else if (subject === "")
                       setErrors({ ...errors, sub: true });
                     else {
-                      loadBatch();
+                      loadRes();
                     }
                   }}
                 >
@@ -368,17 +379,39 @@ const Subject: React.SFC<SubjectProps> = () => {
                   >
                     Reset
                   </Button>
+                  <Button
+                    style={{ marginLeft: "10px" }}
+                    variant="contained"
+                    color="primary"
+                    onClick={() =>
+                      section === ""
+                        ? window.open(
+                            `http://localhost:4000/script/subjectwize/${batch}/${sem}/${subject}/${yearBack}/${backLog}`,
+                            "_blank"
+                          )
+                        : window.open(
+                            `http://localhost:4000/script/subjectwize/${batch}/${sem}/${subject}/${yearBack}/${backLog}/${section}`,
+                            "_blank"
+                          )
+                    }
+                  >
+                    Export
+                  </Button>
                 </form>
               </CardContent>
             </Card>
-            {called && !loading && (
-              <TotalFCDTable raw_data={data.batchResult} />
-            )}
           </Container>
         </Grid>
         <Grid item xs={12} sm={4}>
-          {called && !loading && <TotalFCDBar data={data} />}
-          {called && !loading && <TotalFCDPie data={data} />}
+          {called && !loading && <SubjectBar data={data} />}
+          {called && loading && <CircularProgress />}
+          {called && !loading && <SubjectPie data={data} />}
+        </Grid>
+        <Grid item xs={12}>
+          {called && loading && <CircularProgress />}
+          {called && !loading && (
+            <SubjectTable raw_data={data.subjectWizeResult} />
+          )}
         </Grid>
       </Grid>
     </div>
