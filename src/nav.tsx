@@ -15,7 +15,9 @@ function myFunction() {
 const Navbar: React.SFC<NavbarProps> = () => {
   return (
     <div className="topnav" id="myTopnav">
-      <a style={{ cursor: "default" }}>Resnal</a>
+      <NavLink to="/" style={{ cursor: "default" }} activeClassName="dead">
+        Resnal
+      </NavLink>
       <NavLink to="/batch" activeClassName="active">
         Batchwize Results
       </NavLink>
@@ -27,9 +29,10 @@ const Navbar: React.SFC<NavbarProps> = () => {
       >
         Subjectwize Results
       </NavLink>
-      <a className="icon link" onClick={() => myFunction()}>
+
+      <button className="icon link" onClick={() => myFunction()}>
         <i className="fa fa-bars"></i>
-      </a>
+      </button>
     </div>
   );
 };
