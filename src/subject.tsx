@@ -14,7 +14,7 @@ import TotalFCDBar from "./totalFCDBar";
 import TotalFCDPie from "./totalFCDPie";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-export interface BatchProps {}
+export interface SubjectProps {}
 const GET_BATCH = gql`
   query getBatch(
     $batch: String!
@@ -51,6 +51,15 @@ const GET_SEMS = gql`
   }
 `;
 
+const GET_SUBS = gql`
+  query getSubs($batch: String!, $sem: Int!) {
+    subs(batch: $batch, sem: $sem) {
+      subjectCode
+      subjectName
+    }
+  }
+`;
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -72,24 +81,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Batch: React.SFC<BatchProps> = () => {
+const Subject: React.SFC<SubjectProps> = () => {
   const { loading: Bloading, error, data: Bdata } = useQuery(GET_BATCHES);
   const [batch, setBatch] = useState<string>("");
   const [sem, setSem] = useState<string>("");
   const [section, setSection] = useState<string>("");
+  const [subject, setSubject] = useState<string>("");
   const [yearBack, setYearBack] = useState(true);
   const [backLog, setBackLog] = useState(false);
-  let [counts, setCounts] = useState([
-    { name: "FCD", count: 0 },
-    { name: "FC", count: 0 },
-    { name: "SC", count: 0 },
-    { name: "P", count: 0 },
-    { name: "F", count: 0 },
-  ]);
   const classes = useStyles();
   const [errors, setErrors] = useState({
     batch: false,
     sem: false,
+    sub: false,
   });
   const [loadBatch, { called, loading, data }] = useLazyQuery(GET_BATCH, {
     variables: {
@@ -104,6 +108,12 @@ const Batch: React.SFC<BatchProps> = () => {
     loadSems,
     { called: sCalled, loading: sLoading, data: sData },
   ] = useLazyQuery(GET_SEMS, { variables: { batch } });
+  const [
+    loadSubs,
+    { called: subCalled, loading: subLoading, data: subData },
+  ] = useLazyQuery(GET_SUBS, {
+    variables: { batch, sem: Number.parseInt(sem) },
+  });
 
   return (
     <div>
@@ -119,12 +129,14 @@ const Batch: React.SFC<BatchProps> = () => {
               }}
             >
               <CardContent>
-                <h2>Batchwize Result</h2>
+                <h2>Subjectwize Result</h2>
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
                     if (batch === "") setErrors({ ...errors, batch: true });
                     else if (sem === "") setErrors({ ...errors, sem: true });
+                    else if (subject === "")
+                      setErrors({ ...errors, sub: true });
                     else {
                       loadBatch();
                     }
@@ -197,6 +209,7 @@ const Batch: React.SFC<BatchProps> = () => {
                         if (e.target.value === "")
                           setErrors({ ...errors, sem: true });
                         else setErrors({ ...errors, sem: false });
+                        loadSubs();
                       }}
                       displayEmpty
                       className={classes.select}
@@ -261,6 +274,63 @@ const Batch: React.SFC<BatchProps> = () => {
                       Select Section(Optional)
                     </FormHelperText>
                   </FormControl>
+                  <FormControl
+                    className={classes.formControl}
+                    error={errors.sub}
+                  >
+                    <InputLabel shrink style={{ color: "white" }}>
+                      Subject
+                    </InputLabel>
+                    <Select
+                      required
+                      style={{ color: "white" }}
+                      labelId="demo-simple-select-placeholder-label-label"
+                      id="demo-simple-select-placeholder-label"
+                      value={subject}
+                      onChange={(e) => {
+                        setSubject(e.target.value as string);
+                        if (e.target.value === "")
+                          setErrors({ ...errors, sub: true });
+                        else setErrors({ ...errors, sub: false });
+                      }}
+                      displayEmpty
+                      className={classes.select}
+                      inputProps={{
+                        classes: {
+                          icon: classes.icon,
+                        },
+                      }}
+                    >
+                      {!subCalled && (
+                        <MenuItem value="">
+                          <em>Select Batch and Sem</em>
+                        </MenuItem>
+                      )}
+                      {subLoading && subCalled && (
+                        <MenuItem value="">
+                          <em>Loading....</em>
+                        </MenuItem>
+                      )}
+                      {!subLoading && subCalled && (
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                      )}
+                      {!subLoading &&
+                        subCalled &&
+                        subData.subs.map((sub: any) => (
+                          <MenuItem
+                            key={sub.subjectCode}
+                            value={sub.subjectCode}
+                          >
+                            {sub.subjectCode}-{sub.subjectName}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                    <FormHelperText style={{ color: "white" }}>
+                      Select Semester(Required)
+                    </FormHelperText>
+                  </FormControl>
                   <br />
                   <FormControlLabel
                     labelPlacement="start"
@@ -315,4 +385,4 @@ const Batch: React.SFC<BatchProps> = () => {
   );
 };
 
-export default Batch;
+export default Subject;

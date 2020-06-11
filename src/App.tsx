@@ -7,6 +7,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import Batch from "./batch";
+import Subject from "./subject";
 function App() {
   return (
     <div>
@@ -20,7 +21,7 @@ function App() {
             <Batch />
           </Route>
           <Route path="/subject">
-            <h1>Subjectwize</h1>
+            <Subject />
           </Route>
         </Switch>
       </Router>
