@@ -35,7 +35,7 @@ const SubjectPie: React.SFC<SubjectPieProps> = ({ data }) => {
         label
       >
         {data01.map((entry: any, index: any) => (
-          <Cell fill={COLORS[index % COLORS.length]} />
+          <Cell key={index} fill={COLORS[index % COLORS.length]} />
         ))}
       </Pie>
       <Tooltip />

@@ -11,7 +11,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-
+const _ = require("lodash");
 export interface SubjectTableProps {
   raw_data: any;
 }
@@ -48,6 +48,8 @@ const SubjectTable: React.SFC<SubjectTableProps> = ({ raw_data }) => {
   const [data, setData] = useState([
     ...raw_data.filter((value: any) => value.marks.length === 1),
   ]);
+  const [sort, setSort] = useState<Boolean>(true);
+  const [doSort, setDoSort] = useState<Boolean>(false);
   const [doFilter, setDoFilter] = useState(false);
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -70,6 +72,12 @@ const SubjectTable: React.SFC<SubjectTableProps> = ({ raw_data }) => {
     ]);
     setDoFilter(false);
   }
+  if (doSort) {
+    if (sort) setData(_.orderBy(data, ["marks[0].totalMarks"], ["desc"]));
+    else setData(_.orderBy(data, ["marks[0].totalMarks"], ["asc"]));
+    setDoSort(false);
+    setSort(sort === true ? false : true);
+  }
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -86,7 +94,23 @@ const SubjectTable: React.SFC<SubjectTableProps> = ({ raw_data }) => {
             <StyledTableCell align="left">Section</StyledTableCell>
             <StyledTableCell align="left">Internal Marks</StyledTableCell>
             <StyledTableCell align="left">External Marks</StyledTableCell>
-            <StyledTableCell align="left">Total Marks</StyledTableCell>
+            <StyledTableCell align="left">
+              Total Marks &nbsp;
+              {sort && (
+                <i
+                  style={{ cursor: "pointer" }}
+                  className="fas fa-arrow-down"
+                  onClick={() => setDoSort(true)}
+                ></i>
+              )}
+              {!sort && (
+                <i
+                  style={{ cursor: "pointer" }}
+                  className="fas fa-arrow-up"
+                  onClick={() => setDoSort(true)}
+                ></i>
+              )}
+            </StyledTableCell>
             <StyledTableCell align="left">Overall Grade</StyledTableCell>
           </TableRow>
         </TableHead>

@@ -388,11 +388,11 @@ const Subject: React.SFC<SubjectProps> = () => {
                     onClick={() =>
                       section === ""
                         ? window.open(
-                            `http://localhost:4000/script/subjectwize/${batch}/${sem}/${subject}/${yearBack}/${backLog}`,
+                            `http://rottiakash.ddns.net:4000/script/subjectwize/${batch}/${sem}/${subject}/${yearBack}/${backLog}`,
                             "_blank"
                           )
                         : window.open(
-                            `http://localhost:4000/script/subjectwize/${batch}/${sem}/${subject}/${yearBack}/${backLog}/${section}`,
+                            `http://rottiakash.ddns.net:4000/script/subjectwize/${batch}/${sem}/${subject}/${yearBack}/${backLog}/${section}`,
                             "_blank"
                           )
                     }

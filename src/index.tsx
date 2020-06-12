@@ -5,6 +5,12 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
+import * as firebase from "firebase/app";
+import "firebase/analytics";
+import firebaseConfig from "./firebase";
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
 const client = new ApolloClient({
   uri: "http://rottiakash.ddns.net:4000",
