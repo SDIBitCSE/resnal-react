@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Batch from "./batch";
 import Subject from "./subject";
+import Student from "./student";
 function App() {
   return (
     <div>
@@ -22,6 +23,9 @@ function App() {
           </Route>
           <Route path="/subject">
             <Subject />
+          </Route>
+          <Route path="/student">
+            <Student />
           </Route>
         </Switch>
       </Router>

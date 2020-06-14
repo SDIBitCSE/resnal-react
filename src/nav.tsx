@@ -29,7 +29,14 @@ const Navbar: React.SFC<NavbarProps> = () => {
       >
         Subjectwize Results
       </NavLink>
-
+      <NavLink
+        to="/student"
+        className="link"
+        activeClassName="active"
+        href="/student"
+      >
+        Student Profile
+      </NavLink>
       <button className="icon link" onClick={() => myFunction()}>
         <i className="fa fa-bars"></i>
       </button>

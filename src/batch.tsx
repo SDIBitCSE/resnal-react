@@ -304,11 +304,11 @@ const Batch: React.SFC<BatchProps> = () => {
                     onClick={() =>
                       section === ""
                         ? window.open(
-                            `http://rottiakash.ddns.net:4000/script/batchwize/${batch}/${sem}/${yearBack}/${backLog}`,
+                            `https://graph.resnal.ml/script/batchwize/${batch}/${sem}/${yearBack}/${backLog}`,
                             "_blank"
                           )
                         : window.open(
-                            `http://rottiakash.ddns.net:4000/script/batchwize/${batch}/${sem}/${yearBack}/${backLog}/${section}`,
+                            `https://graph.resnal.ml/script/batchwize/${batch}/${sem}/${yearBack}/${backLog}/${section}`,
                             "_blank"
                           )
                     }
@@ -322,11 +322,11 @@ const Batch: React.SFC<BatchProps> = () => {
                     onClick={() =>
                       section === ""
                         ? window.open(
-                            `http://rottiakash.ddns.net:4000/script/exportall/${batch}/${sem}/${yearBack}/${backLog}`,
+                            `https://graph.resnal.ml/script/exportall/${batch}/${sem}/${yearBack}/${backLog}`,
                             "_blank"
                           )
                         : window.open(
-                            `http://rottiakash.ddns.net:4000/script/exportall/${batch}/${sem}/${yearBack}/${backLog}/${section}`,
+                            `https://graph.resnal.ml/script/exportall/${batch}/${sem}/${yearBack}/${backLog}/${section}`,
                             "_blank"
                           )
                     }

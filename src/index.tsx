@@ -13,7 +13,7 @@ import firebaseConfig from "./firebase";
 firebase.initializeApp(firebaseConfig);
 
 const client = new ApolloClient({
-  uri: "http://rottiakash.ddns.net:4000",
+  uri: "https://graph.resnal.ml",
 });
 ReactDOM.render(
   <React.StrictMode>
