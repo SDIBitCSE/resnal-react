@@ -15,7 +15,11 @@ function myFunction() {
 const Navbar: React.SFC<NavbarProps> = () => {
   return (
     <div className="topnav" id="myTopnav">
-      <NavLink to="/" style={{ cursor: "default" }} activeClassName="dead">
+      <NavLink
+        to="/home"
+        style={{ cursor: "default" }}
+        activeClassName="active"
+      >
         Resnal
       </NavLink>
       <NavLink to="/batch" activeClassName="active">

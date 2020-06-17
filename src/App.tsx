@@ -9,6 +9,7 @@ import {
 import Batch from "./batch";
 import Subject from "./subject";
 import Student from "./student";
+import Home from "./home";
 function App() {
   return (
     <div>
@@ -16,7 +17,10 @@ function App() {
         <Navbar />
         <Switch>
           <Route exact path="/">
-            <Redirect to="/batch" />
+            <Redirect to="/home" />
+          </Route>
+          <Route path="/home">
+            <Home />
           </Route>
           <Route path="/batch">
             <Batch />
