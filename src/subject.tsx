@@ -412,6 +412,18 @@ const Subject: React.SFC<SubjectProps> = () => {
         <Grid item xs={12}>
           {called && loading && <CircularProgress />}
           {called && !loading && (
+            <h3>
+              Number of Students:
+              {
+                [
+                  ...data.subjectWizeResult.filter(
+                    (value: any) => value.marks.length === 1
+                  ),
+                ].length
+              }
+            </h3>
+          )}
+          {called && !loading && (
             <SubjectTable raw_data={data.subjectWizeResult} />
           )}
         </Grid>

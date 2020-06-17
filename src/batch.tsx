@@ -338,6 +338,9 @@ const Batch: React.SFC<BatchProps> = () => {
             </Card>
             {called && loading && <CircularProgress />}
             {called && !loading && (
+              <h3>Number of Students:{data.batchResult.length}</h3>
+            )}
+            {called && !loading && (
               <TotalFCDTable raw_data={data.batchResult} />
             )}
           </Container>
